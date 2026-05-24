@@ -1,0 +1,7 @@
+{
+  "name": "data_to_influxdb",
+  "build": {
+    "libArchive": false,
+    "extraScript": "setup_deps.py"
+  }
+}
