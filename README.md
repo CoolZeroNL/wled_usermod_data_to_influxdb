@@ -1,4 +1,4 @@
-# Sensors To Home Assistant (or mqtt)
+# wLED Data To InfluxDB
 
 This usermod will send data to `grafana.local` on `8086` directly into the influxDB
 
