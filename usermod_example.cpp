@@ -15,9 +15,6 @@
   // #include <ESP8266HTTPClient.h>
   // #include <WiFiClient.h>
 
-  bool enabled = false;
-  bool initDone = false;
-  
   using namespace mDNSResolver;
   // WiFiClient wifiClient;
   WiFiUDP udp;
@@ -60,6 +57,9 @@
 #endif
 
 uint8_t temprature_sens_read();
+
+bool enabled = false;
+bool initDone = false;
 
 static AsyncClient * aClient = NULL;
 static AsyncClient * bClient = NULL;
