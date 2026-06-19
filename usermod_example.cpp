@@ -100,7 +100,9 @@ private:
   bool forceConfig = false;
   unsigned long nextMeasure = 0;  
 
-  
+  // string that are used multiple time (this will save some flash memory)
+  static const char _name[];
+  static const char _enabled[];
 
   //initialize mDNS service
   #if defined ( ESP8266 )
