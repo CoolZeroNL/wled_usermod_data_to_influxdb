@@ -376,7 +376,7 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledRuntime + wledFree_heap + wledTotal_PSRAM + wledFree_PSRAM + wledWifi_Signal + wledWifi_State + wledNetworkisConnected + wledlastKnownWiFiConnected + wledlastNTPsync + wledlastKnownSsid + wledlastKnownApChannel + wledtemperatureRead + wledWLED_Version + wledlastKnownApSsid + wledclientSSID;
+        String postdata = Table + wledHostname + wledClientIP + wledTotal_PSRAM + wledFree_PSRAM + wledWifi_Signal + wledlastKnownSsid + wledtemperatureRead + wledWLED_Version + wledclientSSID;
       #endif
             
       //Serial.println(postdata);
