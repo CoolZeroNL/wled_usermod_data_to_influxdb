@@ -2,9 +2,13 @@
 
 This usermod will send data to `grafana.local` on `8086` directly into the influxDB
 
-# Installation
+# install > 16.0.0
 
-instructions < 16.0.0
+custom_usermods =
+  MyMod = https://github.com/you/my-wled-usermod.git#main
+
+
+# Installation instructions < 16.0.0
 
 ## Enable in WLED
 
