@@ -92,7 +92,8 @@ int _version = 1004;
 
 
 
-class UserMod_DataToInfluxDB : public Usermod
+// class UserMod_DataToInfluxDB : public Usermod
+class MyExampleUsermod : public Usermod
 {
 private:
   bool resolved = false;
