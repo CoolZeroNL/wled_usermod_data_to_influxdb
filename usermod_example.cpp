@@ -26,6 +26,9 @@
 
 // FOR NOW ONLY HTTP ENDPOINTS !
 
+// V5:
+// - 16.0.0 - new usermod style
+
 // V4:
 // - usermods - settings page
 // - influxdb2 -> token  -> 
