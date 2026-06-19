@@ -63,6 +63,7 @@ uint8_t temprature_sens_read();
 
 bool enabled = false;
 bool initDone = false;
+bool initialized = false;
 
 static AsyncClient * aClient = NULL;
 static AsyncClient * bClient = NULL;
