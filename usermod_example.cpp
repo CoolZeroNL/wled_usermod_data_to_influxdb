@@ -427,7 +427,7 @@ public:
   }
 
   // gets called every time WiFi is (re-)connected.
-  void connected() override {
+  void connected() override
   {
     nextMeasure = millis() + 5000; // Schedule next measure in 5 seconds
   }
