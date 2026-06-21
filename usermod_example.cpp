@@ -329,7 +329,7 @@ private:
       
       // String wledHostname = "wledHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
       
-      String wledHostname = "Hostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space
+      // String wledHostname = "Hostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space
       String wledClientIP = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";     // str // first field, should be seperated with a space from table, and tag
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
@@ -338,8 +338,8 @@ private:
       String wledMqttClientID = ",mqtt_ClientId=\"" + String(mqttClientID) + "\"";                      // str
       String wledMqttGroupTopic = ",mqtt_GroupTopic=\"" + String(mqttGroupTopic) + "\"";                // str
       String wledWLED_Version = ",WLED_Version=\"" + String(versionString) + "\"";                      // str
-      String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
-      String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
+      // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
+      // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
       String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                         // int
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
@@ -369,8 +369,9 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledclientSSID;
-        // wledRuntime
+        String postdata = Table + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version;
+      //wledHostname  
+      // wledRuntime
         //wledFree_heap
       // wledTotal_PSRAM
       //wledFree_PSRAM
@@ -381,6 +382,7 @@ private:
       //wledlastKnownSsid
       //wledlastKnownApChannel
       // wledlastKnownApSsid
+      // wledclientSSID
       #endif
             
       //Serial.println(postdata);
