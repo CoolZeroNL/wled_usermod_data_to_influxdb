@@ -422,7 +422,7 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + MaxPwrwled + FPS;
+        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + MaxPwr + wledFPS;
       //wledHostname  
       // wledRuntime
         //wledFree_heap
