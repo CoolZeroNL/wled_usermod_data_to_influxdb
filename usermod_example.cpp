@@ -372,8 +372,10 @@ private:
       String wledWLED_Version = ",WLED_Version=\"" + String(versionString) + "\"";                      // str
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       // ==================================================================================================================================
-      String wledClientIP = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";     // str // first field, should be seperated with a space from table, and tag
+      String wledWIFIip = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";       // str // first field, should be seperated with a space from table, and tag
+      String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
+      
       // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                           // str
       // ==================================================================================================================================
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
@@ -412,7 +414,7 @@ private:
         // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                                                        // int
         // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                                                   // int
       
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
+        String postdata = Table + wledHostname + wledWIFIip + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
       #else
         // ========================================================================================
         String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
@@ -424,7 +426,7 @@ private:
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
         // ========================================================================================
       
-        String postdata = Table + wledMDNSHostname + wledServerDescription + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
+        String postdata = Table + wledMDNSHostname + wledServerDescription + wledWIFIip + wledETHip + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
       
       #endif
             
