@@ -378,10 +378,18 @@ private:
       // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
       // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
 
-      String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps()) + "";                              // int
+      String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps())) + "";                              // int
+      String wledFPS = ",fps=" + String(int(strip.getFps())) + "";                                              // int
 
+
+      // leds[F("count")] = strip.getLengthTotal();
+      // leds[F("pwr")] = BusManager::currentMilliamps();
+      // leds[F("maxpwr")] = BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0;
     
       // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                         // int
+      String wledMaxPwr = ",MaxPwr=" + String(int(BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0)) + "";                         // int
+
+      
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
       String wledInDBPort = ",InDB_Port=\"" + String(_port) + "\"";                                     // str
@@ -414,7 +422,7 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr;
+        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + MaxPwrwled + FPS;
       //wledHostname  
       // wledRuntime
         //wledFree_heap
