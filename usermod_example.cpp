@@ -375,8 +375,7 @@ private:
       String wledWIFIip = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";       // str // first field, should be seperated with a space from table, and tag
       String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
-      String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
-      // String wledlastKnownSsid = ",Wifi_LastKnownSSID=\"" + String(WiFi.SSID()) + "\"";                 // last connected SSID
+      String wledclientSSID = ",Wifi_SSID=\"" + String(WiFi.SSID()) + "\"";                              // str
       // ==================================================================================================================================
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
       String wledMqttPort = ",mqtt_Port=\"" + String(mqttPort) + "\"";                                  // str
