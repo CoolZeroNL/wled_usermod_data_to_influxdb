@@ -114,6 +114,7 @@ private:
         Serial.println("");
         resolver.setLocalIP(WiFi.localIP());
         IPAddress ip = resolver.search(host_name);
+        Serial.println(IpAddress2String(ip));
         if (ip != INADDR_NONE)
         {
             // addr = ip;
@@ -127,6 +128,7 @@ private:
             return;
         }
         
+        Serial.println("grafanaIP: " + grafanaIP);
     }
 
   #else
@@ -541,6 +543,7 @@ public:
     top["error"] = _error;
     top["version"] = _version;
     top["forceConfig"] = _forcecfg;
+    DEBUG_PRINTLN(F("Autosave config saved."));
   }
 
   bool readFromConfig(JsonObject& root)
@@ -553,7 +556,11 @@ public:
     
     JsonObject top = root["InfluxDB2"];
 
-    bool configComplete = !top.isNull();
+    // bool configComplete = !top.isNull();
+    if (top.isNull()) {
+      DEBUG_PRINTLN(F("No config found. (Using defaults.)"));
+      return false;
+    }
 
     // A 3-argument getJsonValue() assigns the 3rd argument as a default value if the Json value is missing
     configComplete &= getJsonValue(top["host"], _host, "tempdata");  // .local is append
@@ -565,7 +572,9 @@ public:
     configComplete &= getJsonValue(top["error"], _error, "");
     configComplete &= getJsonValue(top["forceConfig"], _forcecfg, 1);
     // configComplete &= getJsonValue(top["version"], _version, 1001);
-      
+    
+    DEBUG_PRINTLN(F("config (re)loaded."));
+    
     return configComplete;
   }
 
