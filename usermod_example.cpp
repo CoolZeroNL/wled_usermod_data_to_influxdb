@@ -376,7 +376,7 @@ private:
       String wledMqttGroupTopic = ",mqtt_GroupTopic=\"" + String(mqttGroupTopic) + "\"";                // str
       String wledWLED_Version = ",WLED_Version=\"" + String(versionString) + "\"";                      // str
       // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
-      // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
+      String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
       // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                         // int
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
@@ -410,7 +410,7 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version;
+        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr;
       //wledHostname  
       // wledRuntime
         //wledFree_heap
