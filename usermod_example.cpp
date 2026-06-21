@@ -365,12 +365,9 @@ private:
       
       // table,tagname=aaa field1=aa,field2=bb
 
-      String Table = "wled_measurement,";                                                               // should end with a , and notspace
-      
-      // String wledHostname = "wledHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
-      
-      // String wledHostname = "Hostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space
-      String wledClientIP = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";     // str // first field, should be seperated with a space from table, and tag
+      String Table = "wled_measurement ";                                                               // should end with a , and notspace
+    
+      String wledClientIP = ",Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";     // str // first field, should be seperated with a space from table, and tag
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
       String wledMqttPort = ",mqtt_Port=\"" + String(mqttPort) + "\"";                                  // str
@@ -403,13 +400,17 @@ private:
       
 
       #if defined ( ESP8266 )
+        String wledHostname = "Hostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space  --> 8266
+      
         String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
       #else
+        String wledHostname = "wledHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
+      
         String wledTotal_PSRAM = ",wledTotalPSRAM=" + String(ESP.getPsramSize()/1024);
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version;
+        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version;
       //wledHostname  
       // wledRuntime
         //wledFree_heap
