@@ -423,7 +423,7 @@ private:
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
         // ========================================================================================
       
-        String postdata = Table + wledServerDescription + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
+        String postdata = Table + wledMDNSHostname + wledServerDescription + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
       
       #endif
             
