@@ -265,6 +265,13 @@ private:
 
                   // .pio/libdeps/esp32_eth_mine/MyMod/usermod_example.cpp:264:31: error: too few arguments to function 'void serializeConfig(ArduinoJson::JsonObject)'
                   //  serializeConfig();
+
+                  // wled00/fcn_declare.h:39:6: note: declared here
+                  //  void serializeConfig(JsonObject doc);
+
+                        // does it now need a json arg ??
+
+
             
               // reboot to submit to eeprom, and read the new name as var
               // ESP.restart();
