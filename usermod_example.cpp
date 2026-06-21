@@ -183,10 +183,11 @@ private:
         }else{
             //Serial.println("Host is resolved");
             // Convert esp_ip4_addr_t to String IP
-            grafanaIP = String(IP4_ADDR_TO_UINT8(addr.addr, 0)) + "." +
-                        String(IP4_ADDR_TO_UINT8(addr.addr, 1)) + "." +
-                        String(IP4_ADDR_TO_UINT8(addr.addr, 2)) + "." +
-                        String(IP4_ADDR_TO_UINT8(addr.addr, 3));
+            // grafanaIP = String(IP4_ADDR_TO_UINT8(addr.addr, 0)) + "." +
+            //             String(IP4_ADDR_TO_UINT8(addr.addr, 1)) + "." +
+            //             String(IP4_ADDR_TO_UINT8(addr.addr, 2)) + "." +
+            //             String(IP4_ADDR_TO_UINT8(addr.addr, 3));
+            grafanaIP = String(ip4_addr1(&addr)) + "." + ip4_addr2(&addr) + "." + ip4_addr3(&addr) + "." + ip4_addr4(&addr);
             resolved = true;
         }
     }
