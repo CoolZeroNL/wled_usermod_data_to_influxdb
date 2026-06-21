@@ -1,6 +1,6 @@
 {
   "name": "wled-usermod-example",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "build": {
     "libArchive": false
   },
