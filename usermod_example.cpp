@@ -261,7 +261,11 @@ private:
           {
               Serial.println("- [NOK] ORG != ORG");
               _org = org;
-              serializeConfig();
+              //serializeConfig();
+
+                  // .pio/libdeps/esp32_eth_mine/MyMod/usermod_example.cpp:264:31: error: too few arguments to function 'void serializeConfig(ArduinoJson::JsonObject)'
+                  //  serializeConfig();
+            
               // reboot to submit to eeprom, and read the new name as var
               // ESP.restart();
           }
