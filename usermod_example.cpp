@@ -553,7 +553,7 @@ public:
     bool configComplete = !top.isNull();
 
     // A 3-argument getJsonValue() assigns the 3rd argument as a default value if the Json value is missing
-    configComplete &= getJsonValue(top["host"], _host, "tempdata.local");
+    configComplete &= getJsonValue(top["host"], _host, "tempdata");  // .local is append
     configComplete &= getJsonValue(top["port"], _port, 80); 
     configComplete &= getJsonValue(top["interval"], _interval, 10000); 
     // configComplete &= getJsonValue(top["token"], _token, "myesptoken");
