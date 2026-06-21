@@ -94,7 +94,8 @@ private:
   bool resolved = false;
   bool forceConfig = false;
   unsigned long nextMeasure = 0;  
-
+ 
+  bool usermodActive = false;
   
 
   //initialize mDNS service
@@ -478,6 +479,9 @@ public:
 
   void loop()
   {
+
+    if (!usermodActive || strip.isUpdating()) return;
+    
     unsigned long tempTimer = millis();
 
     if (tempTimer > nextMeasure)
@@ -533,6 +537,7 @@ public:
 
     JsonObject top = root.createNestedObject("InfluxDB2");
     //save these vars persistently whenever settings are save
+    top[F("active")] = usermodActive;
     top["host"] = _host;
     top["port"] = _port;
     top["interval"] = _interval;
@@ -562,6 +567,7 @@ public:
     // }
 
     // A 3-argument getJsonValue() assigns the 3rd argument as a default value if the Json value is missing
+    configComplete &= getJsonValue(top[F("active")], usermodActive);
     configComplete &= getJsonValue(top["host"], _host, "tempdata");
     configComplete &= getJsonValue(top["port"], _port, 80); 
     configComplete &= getJsonValue(top["interval"], _interval, 10000); 
