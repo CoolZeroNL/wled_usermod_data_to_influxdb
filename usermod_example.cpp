@@ -438,7 +438,10 @@ private:
 
           // mDNS:
           String a = "POST /influxdb/api/v2/write?org=" + String(_org) + "&bucket=" + String(_bucket) + "&precision=s HTTP/1.0\r\nContent-Length:" + String(len) + "\r\nAuthorization: Token " + String(_token) + "\r\n\r\n" + postdata + "\r\n";
-          //Serial.println(a);
+          Serial.println(a);
+          Serial.println(postdata);
+
+          // /influxdb/api/v2/write?org=$org&bucket=$bucket&precision=s"
 
           // HTTPS
           // if on ip then + host header ?
