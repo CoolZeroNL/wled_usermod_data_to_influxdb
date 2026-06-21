@@ -114,7 +114,6 @@ private:
         Serial.println("");
         resolver.setLocalIP(WiFi.localIP());
         IPAddress ip = resolver.search(host_name);
-        Serial.println(IpAddress2String(ip));
         if (ip != INADDR_NONE)
         {
             // addr = ip;
@@ -127,8 +126,6 @@ private:
             Serial.println("Host was not found!");
             return;
         }
-        
-        Serial.println("grafanaIP: " + grafanaIP);
     }
 
   #else
@@ -177,19 +174,20 @@ private:
         esp_err_t err = mdns_query_a(host_name, 2000, &addr);
         if(err){
             if(err == ESP_ERR_NOT_FOUND){
-                //Serial.println("Host was not found!");
+                Serial.println("Host was not found!");
                 return;
             }
             Serial.println("Query Failed");
             return;
         }else{
-            //Serial.println("Host is resolved");
+            Serial.println("Host is resolved");
             // Convert esp_ip4_addr_t to String IP
             // grafanaIP = String(IP4_ADDR_TO_UINT8(addr.addr, 0)) + "." +
             //             String(IP4_ADDR_TO_UINT8(addr.addr, 1)) + "." +
             //             String(IP4_ADDR_TO_UINT8(addr.addr, 2)) + "." +
             //             String(IP4_ADDR_TO_UINT8(addr.addr, 3));
             grafanaIP = String(ip4_addr1(&addr)) + "." + ip4_addr2(&addr) + "." + ip4_addr3(&addr) + "." + ip4_addr4(&addr);
+            Serial.println("grafanaIP: " + grafanaIP);
             resolved = true;
         }
     }
@@ -441,7 +439,6 @@ private:
           // mDNS:
           String a = "POST /influxdb/api/v2/write?org=" + String(_org) + "&bucket=" + String(_bucket) + "&precision=s HTTP/1.0\r\nContent-Length:" + String(len) + "\r\nAuthorization: Token " + String(_token) + "\r\n\r\n" + postdata + "\r\n";
           Serial.println(a);
-          Serial.println(postdata);
 
           // /influxdb/api/v2/write?org=$org&bucket=$bucket&precision=s"
 
@@ -556,11 +553,11 @@ public:
     
     JsonObject top = root["InfluxDB2"];
 
-    // bool configComplete = !top.isNull();
-    if (top.isNull()) {
-      DEBUG_PRINTLN(F("No config found. (Using defaults.)"));
-      return false;
-    }
+    bool configComplete = !top.isNull();
+    // if (top.isNull()) {
+    //   DEBUG_PRINTLN(F("No config found. (Using defaults.)"));
+    //   return false;
+    // }
 
     // A 3-argument getJsonValue() assigns the 3rd argument as a default value if the Json value is missing
     configComplete &= getJsonValue(top["host"], _host, "tempdata");
