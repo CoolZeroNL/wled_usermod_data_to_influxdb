@@ -1,26 +1,5 @@
 #include "wled.h"
 
-/*
- * Usermods allow you to add own functionality to WLED without touching core source files.
- * See the WLED docs: https://kno.wled.ge/advanced/custom-features/
- *
- * This is an example usermod. It demonstrates:
- *   - persistent settings via addToConfig() / readFromConfig()
- *   - JSON state read/write via addToJsonState() / readFromJsonState()
- *   - MQTT subscribe and message handling (guarded by WLED_DISABLE_MQTT)
- *   - button event handling
- *   - the Usermod Settings page via appendConfigData()
- *
- * To create your own usermod:
- *   1. Click "Use this template" on https://github.com/wled/wled-usermod-example to create your own repo.
- *   2. Rename the class and file to something descriptive.
- *   3. Reference your new repo in platformio_override.ini via custom_usermods.
- *
- * REGISTER_USERMOD() at the bottom self-registers the instance — no other
- * file edits are needed.
- */
-
-//class name. Use something descriptive and leave the ": public Usermod" part :)
 class MyExampleUsermod : public Usermod {
 
   private:
@@ -45,10 +24,6 @@ class MyExampleUsermod : public Usermod {
     // string that are used multiple time (this will save some flash memory)
     static const char _name[];
     static const char _enabled[];
-
-
-    // any private methods should go here (non-inline method should be defined out of class)
-    void publishMqtt(const char* state, bool retain = false); // example for publishing MQTT message
 
 
   public:
@@ -346,26 +321,9 @@ class MyExampleUsermod : public Usermod {
    //Your usermod will remain compatible as it does not need to implement all methods from the Usermod base class!
 };
 
-
 // add more strings here to reduce flash memory usage
 const char MyExampleUsermod::_name[]    PROGMEM = "ExampleUsermod";
 const char MyExampleUsermod::_enabled[] PROGMEM = "enabled";
-
-
-// implementation of non-inline member methods
-
-void MyExampleUsermod::publishMqtt(const char* state, bool retain)
-{
-#ifndef WLED_DISABLE_MQTT
-  //Check if MQTT Connected, otherwise it will crash the 8266
-  if (WLED_MQTT_CONNECTED) {
-    char subuf[64];
-    strcpy(subuf, mqttDeviceTopic);
-    strcat_P(subuf, PSTR("/example"));
-    mqtt->publish(subuf, 0, retain, state);
-  }
-#endif
-}
 
 static MyExampleUsermod example_usermod;
 REGISTER_USERMOD(example_usermod);
