@@ -364,11 +364,18 @@ private:
       // herefore we need to make sure the last item in the line protocal is not been seend as a timestamp value
       
       // table,tagname=aaa field1=aa,field2=bb
-
+      
       String Table = "wled_measurement";                                                               // should end with a , and notspace
-    
+
+      // leds[F("count")] = strip.getLengthTotal();
+      
       String wledClientIP = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";     // str // first field, should be seperated with a space from table, and tag
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
+      
+      
+
+
+      
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
       String wledMqttPort = ",mqtt_Port=\"" + String(mqttPort) + "\"";                                  // str
       String wledMqttEnabled = ",mqtt_Enabled=\"" + String(mqttEnabled) + "\"";                         // str
@@ -376,19 +383,17 @@ private:
       String wledMqttGroupTopic = ",mqtt_GroupTopic=\"" + String(mqttGroupTopic) + "\"";                // str
       String wledWLED_Version = ",WLED_Version=\"" + String(versionString) + "\"";                      // str
       // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
+      
       // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
-
       String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps())) + "";                              // int
-      String wledFPS = ",fps=" + String(int(strip.getFps())) + "";                                              // int
 
-
-      // leds[F("count")] = strip.getLengthTotal();
-      // leds[F("pwr")] = BusManager::currentMilliamps();
-      // leds[F("maxpwr")] = BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0;
-    
       // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                         // int
       String wledMaxPwr = ",MaxPwr=" + String(int(BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0)) + "";                         // int
+     
+      String wledFPS = ",fps=" + String(int(strip.getFps())) + "";                                              // int
 
+      // device name ?    -> wled-red oid.. 
+      // UI name ?
       
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
@@ -413,16 +418,18 @@ private:
 
       #if defined ( ESP8266 )
         String wledHostname = ",Hostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space  --> 8266
+      serverDescription
       
         String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
       #else
-        String wledHostname = ",Hostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
+        String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
+        String wledServerDescription = ",Hostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
       
         String wledTotal_PSRAM = ",wledTotalPSRAM=" + String(ESP.getPsramSize()/1024);
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
+        String postdata = Table + wledServerDescription, wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
       //wledHostname  
       // wledRuntime
         //wledFree_heap
