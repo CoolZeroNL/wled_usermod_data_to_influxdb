@@ -415,7 +415,7 @@ private:
       #else
         // ========================================================================================
         String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
-        String wledServerDescription = ",Hostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
+        String wledServerDescription = ",Hostname=" + String(serverDescription) + "";                       // tag is attached to table splitted with , no space
         // ========================================================================================
         String wledTotal_PSRAM = ",wledTotalPSRAM=" + String(ESP.getPsramSize()/1024);
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
