@@ -22,6 +22,7 @@
 
 #else
   #include <ESPmDNS.h>
+  #include <esp32/esp32.h> // Ensure you include the correct headers for esp_ip4_addr_t
 #endif
 
 // FOR NOW ONLY HTTP ENDPOINTS !
@@ -143,14 +144,36 @@ private:
 
     }
 
+    // void resolve_mdns_host(const char * host_name)
+    // {
+    //     Serial.printf("Query A: %s.local", host_name);
+
+    //     struct ip4_addr addr;
+    //     addr.addr = 0;
+
+    //     esp_err_t err = mdns_query_a(host_name, 2000,  &addr);
+    //     if(err){
+    //         if(err == ESP_ERR_NOT_FOUND){
+    //             //Serial.println("Host was not found!");
+    //             return;
+    //         }
+    //         Serial.println("Query Failed");
+    //         return;
+    //     }else{
+    //       //Serial.println("Host is resolved");
+    //       //Serial.printf(IPSTR, IP2STR(&addr));
+    //       grafanaIP = String(ip4_addr1(&addr)) + "." + ip4_addr2(&addr) + "." + ip4_addr3(&addr) + "." + ip4_addr4(&addr);
+    //       resolved = true;
+    //     }
+    // }
     void resolve_mdns_host(const char * host_name)
     {
-        Serial.printf("Query A: %s.local", host_name);
-
-        struct ip4_addr addr;
+        Serial.printf("Query A: %s.local\n", host_name);
+    
+        esp_ip4_addr_t addr;
         addr.addr = 0;
-
-        esp_err_t err = mdns_query_a(host_name, 2000,  &addr);
+    
+        esp_err_t err = mdns_query_a(host_name, 2000, &addr);
         if(err){
             if(err == ESP_ERR_NOT_FOUND){
                 //Serial.println("Host was not found!");
@@ -159,12 +182,17 @@ private:
             Serial.println("Query Failed");
             return;
         }else{
-          //Serial.println("Host is resolved");
-          //Serial.printf(IPSTR, IP2STR(&addr));
-          grafanaIP = String(ip4_addr1(&addr)) + "." + ip4_addr2(&addr) + "." + ip4_addr3(&addr) + "." + ip4_addr4(&addr);
-          resolved = true;
+            //Serial.println("Host is resolved");
+            // Convert esp_ip4_addr_t to String IP
+            grafanaIP = String(IP4_ADDR_TO_UINT8(addr.addr, 0)) + "." +
+                        String(IP4_ADDR_TO_UINT8(addr.addr, 1)) + "." +
+                        String(IP4_ADDR_TO_UINT8(addr.addr, 2)) + "." +
+                        String(IP4_ADDR_TO_UINT8(addr.addr, 3));
+            resolved = true;
         }
     }
+
+
   #endif  
 
    void runAsyncClient(){
