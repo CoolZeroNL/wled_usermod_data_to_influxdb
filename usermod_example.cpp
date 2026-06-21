@@ -360,6 +360,8 @@ private:
       // String wledlastNTPsync = ",wledlastNTPsync=" + String(ntpLastSyncTime);  
       // String wledlastKnownApChannel = ",wledlastKnownApChannel=" + String(apChannel);
 
+      
+
       #if defined ( ESP8266 )
         String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
       #else
@@ -367,7 +369,18 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        String postdata = Table + wledHostname + wledClientIP + wledRuntime + wledFree_heap + wledTotal_PSRAM + wledFree_PSRAM + wledWifi_Signal + wledWifi_State + wledNetworkisConnected + wledlastKnownWiFiConnected + wledlastNTPsync + wledlastKnownSsid + wledlastKnownApChannel + wledtemperatureRead + wledWLED_Version + wledlastKnownApSsid + wledclientSSID;
+        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledclientSSID;
+        // wledRuntime
+        //wledFree_heap
+      // wledTotal_PSRAM
+      //wledFree_PSRAM
+      // wledWifi_State
+      //wledNetworkisConnected
+      //wledlastKnownWiFiConnected
+      //wledlastNTPsync
+      //wledlastKnownSsid
+      //wledlastKnownApChannel
+      // wledlastKnownApSsid
       #endif
             
       //Serial.println(postdata);
