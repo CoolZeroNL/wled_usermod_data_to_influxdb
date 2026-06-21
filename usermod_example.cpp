@@ -26,9 +26,6 @@
 
 // FOR NOW ONLY HTTP ENDPOINTS !
 
-// V5:
-// - 16.0.0 - new usermod style
-
 // V4:
 // - usermods - settings page
 // - influxdb2 -> token  -> 
@@ -61,10 +58,6 @@
 
 uint8_t temprature_sens_read();
 
-bool enabled = false;
-bool initDone = false;
-bool initialized = false;
-
 static AsyncClient * aClient = NULL;
 static AsyncClient * bClient = NULL;
 
@@ -93,17 +86,14 @@ int _version = 1004;
 
 
 
-// class UserMod_DataToInfluxDB : public Usermod
-class MyExampleUsermod : public Usermod
+class UserMod_DataToInfluxDB : public Usermod
 {
 private:
   bool resolved = false;
   bool forceConfig = false;
   unsigned long nextMeasure = 0;  
 
-  // string that are used multiple time (this will save some flash memory)
-  static const char _name[];
-  static const char _enabled[];
+  
 
   //initialize mDNS service
   #if defined ( ESP8266 )
@@ -376,8 +366,7 @@ private:
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
 
-        //String postdata = Table + wledHostname + wledClientIP + wledTotal_PSRAM + wledFree_PSRAM + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledclientSSID;
-        String postdata = Table + wledHostname + wledClientIP + wledWifi_Signal + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledUMVersion + wledWLED_Version + wledclientSSID + wledPwr + wledMaxPwr + wledtemperatureRead + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
+        String postdata = Table + wledHostname + wledClientIP + wledRuntime + wledFree_heap + wledTotal_PSRAM + wledFree_PSRAM + wledWifi_Signal + wledWifi_State + wledNetworkisConnected + wledlastKnownWiFiConnected + wledlastNTPsync + wledlastKnownSsid + wledlastKnownApChannel + wledtemperatureRead + wledWLED_Version + wledlastKnownApSsid + wledclientSSID;
       #endif
             
       //Serial.println(postdata);
@@ -416,37 +405,19 @@ private:
   }
 
 public:
-
-  /**
-   * Enable/Disable the usermod
-   */
-  inline void enable(bool enable) { enabled = enable; }
-
-  /**
-   * Get usermod enabled/disabled state
-   */
-  inline bool isEnabled() { return enabled; }
-
-  void setup() override {
-    // do your set-up here
-    //Serial.println("Hello from my usermod!");
+  void setup()
+  {
     Serial.println("Starting!");
-    initDone = true;
   }
 
   // gets called every time WiFi is (re-)connected.
-  void connected() override
+  void connected()
   {
     nextMeasure = millis() + 5000; // Schedule next measure in 5 seconds
   }
 
-  // void loop()
-  // {
-  void loop() override {
-    // if usermod is disabled or called during strip updating just exit
-    // NOTE: on very long strips strip.isUpdating() may always return true so update accordingly
-    if (!enabled || strip.isUpdating()) return;
-
+  void loop()
+  {
     unsigned long tempTimer = millis();
 
     if (tempTimer > nextMeasure)
@@ -494,11 +465,8 @@ public:
   //   //if (root["bri"] == 255) Serial.println(F("Don't burn down your garage!"));
   // }
 
-  // void addToConfig(JsonObject& root)
-  void addToJsonState(JsonObject& root) override
+  void addToConfig(JsonObject& root)
   {
-    if (!initDone || !enabled) return;  // prevent crash on boot applyPreset()
-    
     JsonObject top = root.createNestedObject("InfluxDB2");
     //save these vars persistently whenever settings are save
     top["host"] = _host;
@@ -512,7 +480,7 @@ public:
     top["forceConfig"] = _forcecfg;
   }
 
-  bool readFromConfig(JsonObject& root) override
+  bool readFromConfig(JsonObject& root)
   {
 
     // default settings values could be set here (or below using the 3-argument getJsonValue()) instead of in the class definition or constructor
@@ -538,10 +506,3 @@ public:
 
 
 };
-
-// add more strings here to reduce flash memory usage
-const char MyExampleUsermod::_name[]    PROGMEM = "ExampleUsermod";
-const char MyExampleUsermod::_enabled[] PROGMEM = "enabled";
-
-static MyExampleUsermod example_usermod;
-REGISTER_USERMOD(example_usermod);
