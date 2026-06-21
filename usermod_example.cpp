@@ -490,6 +490,7 @@ public:
       {
         Serial.println("Error! mDNS could not resolve in loop()!");
         // resolve_mdns_host(find_mdns_host);
+        Serial.println(_host.c_str());
         resolve_mdns_host(_host.c_str());
 
         return; // lets try again next loop
