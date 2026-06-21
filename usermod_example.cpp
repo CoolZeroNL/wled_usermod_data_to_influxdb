@@ -375,8 +375,8 @@ private:
       String wledWIFIip = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";       // str // first field, should be seperated with a space from table, and tag
       String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
-      
-      // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                           // str
+      String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
+      // String wledlastKnownSsid = ",Wifi_LastKnownSSID=\"" + String(WiFi.SSID()) + "\"";                 // last connected SSID
       // ==================================================================================================================================
       String wledMqttHost = ",mqtt_Host=\"" + String(mqttServer) + "\"";                                // str
       String wledMqttPort = ",mqtt_Port=\"" + String(mqttPort) + "\"";                                  // str
@@ -395,7 +395,6 @@ private:
       String wledInDBBucket = ",InDB_Bucket=\"" + String(_bucket) + "\"";                               // str
       String wledInDBInterval = ",InDB_Interval=" + String(_interval) + "";                             // int
       // ==================================================================================================================================
-      // String wledlastKnownSsid = ",wledlastKnownSsid=\"" + String(WiFi.SSID()) + "\"";                 // last connected SSID
       // String wledlastKnownApSsid = ",wledlastKnownApSsid=\"" + String(apSSID) + "\"";                  // last AP ssid
       // String wledlastKnownApPass = ",wledlastKnownApPass=\"" + String(apPass) + "\"";                  // last ssid pass
       // String wledclientPass = ",wledClientPass=\"" + String(clientPass) + "\"";                        
@@ -426,7 +425,7 @@ private:
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
         // ========================================================================================
       
-        String postdata = Table + wledMDNSHostname + wledServerDescription + wledWIFIip + wledETHip + wledWifi_Signal + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
+        String postdata = Table + wledMDNSHostname + wledServerDescription + wledWIFIip + wledETHip + wledWifi_Signal + wledclientSSID + wledtemperatureRead + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS;
       
       #endif
             
