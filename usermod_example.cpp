@@ -376,7 +376,11 @@ private:
       String wledMqttGroupTopic = ",mqtt_GroupTopic=\"" + String(mqttGroupTopic) + "\"";                // str
       String wledWLED_Version = ",WLED_Version=\"" + String(versionString) + "\"";                      // str
       // String wledclientSSID = ",Wifi_SSID=\"" + String(clientSSID) + "\"";                              // str
-      String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
+      // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                              // int
+
+      String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps()) + "";                              // int
+
+    
       // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                         // int
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
