@@ -16,15 +16,24 @@ class MyExampleUsermod : public Usermod {
     String testString = "Forty-Two";
     uint16_t greatValue = 0;  // example persistent value exposed in JSON state
 
-    // These config variables have defaults set inside readFromConfig()
     int testInt;
     long testLong;
     int8_t testPins[2];
 
-    // string that are used multiple time (this will save some flash memory)
+    // mine
+    String _host;
+    String _bucket;
+    String _org;
+    String _token = "myesptoken";
+    String _error = "";
+    int _forcecfg = 1;
+    int _port;
+    int _interval;
+    int _version = 1004;
+
+// string that are used multiple time (this will save some flash memory)
     static const char _name[];
     static const char _enabled[];
-
 
   public:
 
@@ -172,6 +181,8 @@ class MyExampleUsermod : public Usermod {
      */
     void addToConfig(JsonObject& root) override
     {
+      
+      // JsonObject top = root.createNestedObject("InfluxDB2");
       JsonObject top = root.createNestedObject(FPSTR(_name));
       top[FPSTR(_enabled)] = enabled;
       top["great"] = greatValue;
@@ -181,6 +192,17 @@ class MyExampleUsermod : public Usermod {
       top["testULong"] = testULong;
       top["testFloat"] = testFloat;
       top["testString"] = testString;
+      // mine
+      top["host"] = _host;
+      top["port"] = _port;
+      top["interval"] = _interval;
+      // top["token"] = _token;
+      top["bucket"] = _bucket;
+      top["org"] = _org;
+      top["error"] = _error;
+      top["version"] = _version;
+      top["forceConfig"] = _forcecfg;
+      
       JsonArray pinArray = top.createNestedArray("pin");
       pinArray.add(testPins[0]);
       pinArray.add(testPins[1]); 
@@ -195,6 +217,7 @@ class MyExampleUsermod : public Usermod {
      */
     bool readFromConfig(JsonObject& root) override
     {
+      // JsonObject top = root["InfluxDB2"];
       JsonObject top = root[FPSTR(_name)];
 
       bool configComplete = !top.isNull();
@@ -213,6 +236,18 @@ class MyExampleUsermod : public Usermod {
       configComplete &= getJsonValue(top["pin"][0], testPins[0], -1);
       configComplete &= getJsonValue(top["pin"][1], testPins[1], -1);
 
+      // mine
+      configComplete &= getJsonValue(top["host"], _host, "tempdata.local");
+      configComplete &= getJsonValue(top["port"], _port, 80); 
+      configComplete &= getJsonValue(top["interval"], _interval, 10000); 
+      // configComplete &= getJsonValue(top["token"], _token, "myesptoken");
+      configComplete &= getJsonValue(top["bucket"], _bucket, "data");
+      configComplete &= getJsonValue(top["org"], _org, "Main Org.");
+      configComplete &= getJsonValue(top["error"], _error, "");
+      configComplete &= getJsonValue(top["forceConfig"], _forcecfg, 1);
+      // configComplete &= getJsonValue(top["version"], _version, 1001);
+
+      
       return configComplete;
     }
 
