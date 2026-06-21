@@ -22,7 +22,6 @@
 
 #else
   #include <ESPmDNS.h>
-  #include <esp32.h> // Ensure you include the correct headers for esp_ip4_addr_t
 #endif
 
 // FOR NOW ONLY HTTP ENDPOINTS !
