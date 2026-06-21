@@ -65,8 +65,6 @@ static AsyncClient * bClient = NULL;
 String grafanaIP;                           // variable holder
 bool debugthis = true;                      // turn on/off the debugging to serial
 
-bool initialized = false;
-
 // These config variables have defaults set inside readFromConfig()
 String _host;
 String _bucket;
@@ -92,6 +90,7 @@ int _version = 1004;
 class MyExampleUsermod : public Usermod {
 
 private:
+  bool initialized = false;
   bool resolved = false;
   bool forceConfig = false;
   unsigned long nextMeasure = 0;  
