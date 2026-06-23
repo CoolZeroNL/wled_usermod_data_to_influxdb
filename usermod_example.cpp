@@ -373,7 +373,7 @@ private:
       String wledUMVersion = ",FW_Version=\"" + String(_version) + "\"";                                // str
       // ==================================================================================================================================
       String wledWIFIip = " Wifi_ClientIP=\"" + String(WiFi.localIP().toString().c_str()) + "\"";       // str // first field, should be seperated with a space from table, and tag
-      String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
+      
       String wledWifi_Signal = ",Wifi_Signal=" + String(WiFi.RSSI());                                   // int
       String wledclientSSID = ",Wifi_SSID=\"" + String(WiFi.SSID()) + "\"";                              // str
       // ==================================================================================================================================
@@ -411,9 +411,8 @@ private:
       
       #if defined ( ESP8266 )
         String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space  --> 8266
-
-        // String wledtemperatureRead = ",wledtemperatureRead=" + "-1";  // not availible for esp8266 
-        String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
+        String wledETHip = ",ETH_ClientIP=\"" + "0.0.0.0" + "\"";          // str
+        String wledtemperatureRead = ",wledtemperatureRead=" + "-1";  // not availible for esp8266 
       
         // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                                                        // int
         // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                                                   // int
@@ -421,6 +420,7 @@ private:
       #else
         // ========================================================================================
         String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
+        String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
         // ========================================================================================
         String wledTotal_PSRAM = ",wledTotalPSRAM=" + String(ESP.getPsramSize()/1024);
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
