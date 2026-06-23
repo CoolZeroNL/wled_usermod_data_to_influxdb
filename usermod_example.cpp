@@ -411,8 +411,8 @@ private:
       
       #if defined ( ESP8266 )
         String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space  --> 8266
-        String wledETHip = ",ETH_ClientIP=\"" + "0.0.0.0" + "\"";          // str
-        String wledtemperatureRead = ",wledtemperatureRead=" + "-1";  // not availible for esp8266 
+        String wledETHip = ",ETH_ClientIP=\""0.0.0.0"\"";          // str
+        String wledtemperatureRead = ",wledtemperatureRead=-1";  // not availible for esp8266 
       
         // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                                                        // int
         // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                                                   // int
