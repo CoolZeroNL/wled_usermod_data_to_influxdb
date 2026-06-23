@@ -369,7 +369,7 @@ private:
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       // --> make sure its the same as: https://github.com/CoolZeroNL/WLED_0.13.0-b3
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      
+
       String Table = "wled_measurement";                                                               // should end with a , and notspace
 
       // ==================================================================================================================================
@@ -387,10 +387,7 @@ private:
       String wledMqttClientID = ",mqtt_ClientId=\"" + String(mqttClientID) + "\"";                      // str
       String wledMqttGroupTopic = ",mqtt_GroupTopic=\"" + String(mqttGroupTopic) + "\"";                // str
       // ==================================================================================================================================
-      String wledCount = ",ledCount=" + String(int(strip.getLengthTotal())) + "";                                                         // int
-      String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps())) + "";                                                   // int
-      String wledMaxPwr = ",MaxPwr=" + String(int(BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0)) + "";       // int
-      String wledFPS = ",fps=" + String(int(strip.getFps())) + "";                                                                   // int
+      String wledFPS = ",fps=" + String(int(strip.getFps())) + "";                                      // int
       // ==================================================================================================================================
       String wledInDBHost = ",InDB_Host=\"" + String(_host) + "\"";                                     // str
       String wledInDBPort = ",InDB_Port=\"" + String(_port) + "\"";                                     // str
@@ -414,24 +411,33 @@ private:
 
       
       #if defined ( ESP8266 )
-        String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.hostname()) + "";                                 // str // tag is attached to table splitted with , no space  --> 8266
-        String wledETHip = ",ETH_ClientIP=\"0.0.0.0\"";          // str
-        String wledtemperatureRead = ",wledtemperatureRead=-1";  // not availible for esp8266 
-      
-        // String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                                                        // int
-        // String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                                                   // int
-      
+        // ========================================================================================
+        // NOT SUPPORTED, need to find replacement (if needed)
+        String wledETHip = ",ETH_ClientIP=\"0.0.0.0\"";                                                                             // str
+        String wledtemperatureRead = ",wledtemperatureRead=-1";                                                                     // not availible for esp8266 
+        // ========================================================================================  
+        String wledCount = ",ledCount=" + String(int(ledCount)) + "";                                                               // int  
+        // ========================================================================================  
+        String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.hostname()) + "";                                                  // str // tag is attached to table splitted with , no space  --> 8266
+        // ========================================================================================
+        String wledPwr = ",Pwr=" + String(int(strip.currentMilliamps)) + "";                                                        // int
+        String wledMaxPwr = ",MaxPwr=" + String(int(strip.ablMilliampsMax)) + "";                                                   // int
+        // ========================================================================================
       #else
         // ========================================================================================
-        String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                       // tag is attached to table splitted with , no space
-        String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";          // str
+        String wledMDNSHostname = ",mdnsHostname=" + String(WiFi.getHostname()) + "";                                                 // tag is attached to table splitted with , no space
+        String wledETHip = ",ETH_ClientIP=\"" + String(ETH.localIP().toString().c_str()) + "\"";                                      // str
         // ========================================================================================
         String wledTotal_PSRAM = ",wledTotalPSRAM=" + String(ESP.getPsramSize()/1024);
         String wledFree_PSRAM = ",wledFreePSRAM=" + String(ESP.getFreePsram()/1024);
         // ========================================================================================  
         String wledtemperatureRead = ",wledtemperatureRead=" + String(temperatureRead());
         // ========================================================================================
-
+        String wledPwr = ",Pwr=" + String(int(BusManager::currentMilliamps())) + "";                                                   // int
+        String wledMaxPwr = ",MaxPwr=" + String(int(BusManager::currentMilliamps()>0 ? BusManager::ablMilliampsMax() : 0)) + "";       // int
+        // ========================================================================================
+        String wledCount = ",ledCount=" + String(int(strip.getLengthTotal())) + "";                                                    // int
+        // ========================================================================================
       #endif
 
       String postdata = Table + wledMDNSHostname + wledServerDescription + wledWIFIip + wledETHip + wledWifi_Signal + wledclientSSID + wledtemperatureRead + wledMqttHost + wledMqttPort + wledMqttEnabled + wledMqttClientID + wledMqttGroupTopic + wledWLED_Version + wledPwr + wledMaxPwr + wledFPS + wledInDBHost + wledInDBPort + wledInDBOrg + wledInDBBucket + wledInDBInterval;
