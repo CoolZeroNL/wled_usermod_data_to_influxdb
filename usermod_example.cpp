@@ -365,6 +365,10 @@ private:
       // herefore we need to make sure the last item in the line protocal is not been seend as a timestamp value
       
       // table,tagname=aaa field1=aa,field2=bb
+
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // --> make sure its the same as: https://github.com/CoolZeroNL/WLED_0.13.0-b3
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       
       String Table = "wled_measurement";                                                               // should end with a , and notspace
 
